@@ -75,16 +75,16 @@ public class ServiceProduto {
     public void salvar(){      
    
         if(validaCampos()){
-            Produto p = new Produto();
+            Produto produto = new Produto();
            
-            p.setDescricao(this.telaCadastroProduto.getjTextFieldDescricao().getText());
-            p.setPreco(Float.parseFloat(this.telaCadastroProduto.getjTextFieldPreco().getText()));
+            produto.setDescricao(this.telaCadastroProduto.getjTextFieldDescricao().getText());
+            produto.setPreco(Float.parseFloat(this.telaCadastroProduto.getjTextFieldPreco().getText()));
            
            
             if(this.novo){
-                produtoDAO.inserir(p);
+                produtoDAO.inserir(produto);
             } else{
-                produtoDAO.alterar(p);
+                produtoDAO.alterar(produto);
             }
 
             this.listar();
@@ -120,11 +120,11 @@ public class ServiceProduto {
     public void editar(){
         int item = telaListagemProduto.getjTableListaProdutos().getSelectedRow();
         if(item>=0){
-            this.id = (int)telaListagemProduto.getModel().getValueAt(item, 0);
-            Produto p = produtoDAO.pesquisar(this.id);
             telaCadastroProduto.limpar();
-            telaCadastroProduto.getjTextFieldDescricao().setText(p.getDescricao());
-            telaCadastroProduto.getjTextFieldPreco().setText(String.valueOf(p.getPreco()));
+            this.id = (int)telaListagemProduto.getModel().getValueAt(item, 0);
+            Produto produto = produtoDAO.pesquisar(this.id);
+            telaCadastroProduto.getjTextFieldDescricao().setText(produto.getDescricao());
+            telaCadastroProduto.getjTextFieldPreco().setText(String.valueOf(produto.getPreco()));
             this.novo = false;
             telaListagemProduto.setVisible(false);
             telaCadastroProduto.setVisible(true);
